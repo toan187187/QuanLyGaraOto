@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="16" stylesheets="@style.css"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.doan123.Controller.BaoCaoController">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+    <!-- Thanh tiêu đề -->
+    <Label text="📊 BÁO CÁO DOANH THU" styleClass="section-title"
+           style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <!-- Thanh bộ lọc -->
+    <HBox spacing="12" alignment="CENTER_LEFT">
+        <RadioButton fx:id="rbTheoThang" text="Theo tháng trong năm"/>
+        <RadioButton fx:id="rbTheoNgay"  text="Theo ngày trong tháng"/>
+
+        <Label text="Năm:"/>
+        <ComboBox fx:id="cbNam" prefWidth="90"/>
+
+        <ComboBox fx:id="cbThang" prefWidth="80" promptText="Tháng"/>
+
+        <Button text="Xem báo cáo" onAction="#loadBieuDo"
+                style="-fx-background-color: #2980b9; -fx-text-fill: white;
+                       -fx-font-weight: bold; -fx-padding: 6 16 6 16;"/>
+    </HBox>
+
+    <!-- Biểu đồ -->
+    <BarChart fx:id="barChart" VBox.vgrow="ALWAYS"
+              animated="true" legendVisible="true">
+        <xAxis><CategoryAxis fx:id="xAxis"/></xAxis>
+        <yAxis><NumberAxis fx:id="yAxis"/></yAxis>
+    </BarChart>
+
+    <!-- Tổng kết -->
+    <HBox spacing="40" alignment="CENTER">
+        <Label fx:id="lblTongDoanhThu" text="Tổng: 0 VNĐ"
+               style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #27ae60;"/>
+        <Label fx:id="lblSoPhieu" text="Số tháng có doanh thu: 0"
+               style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d;"/>
+    </HBox>
+</VBox>

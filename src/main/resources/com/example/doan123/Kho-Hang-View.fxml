@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.doan123.Controller.KhoHangController">
+    <children>
+        <HBox alignment="CENTER_LEFT" layoutX="30.0" layoutY="20.0" prefWidth="1040.0" spacing="20.0">
+            <children>
+                <Label text="QUẢN LÝ KHO PHỤ TÙNG" textFill="#2c3e50">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+                <javafx.scene.layout.Region HBox.hgrow="ALWAYS" />
+                <TextField fx:id="txtTimKiem" prefHeight="35.0" prefWidth="300.0"
+                           promptText="🔍 Nhập tên phụ tùng để tìm..."
+                           style="-fx-background-radius: 20; -fx-padding: 5 15 5 15;" />
+            </children>
+        </HBox>
+
+        <VBox layoutX="30.0" layoutY="80.0" prefHeight="400.0" prefWidth="320.0" spacing="15.0" style="-fx-background-color: #ecf0f1; -fx-background-radius: 10;">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+            <children>
+                <Label text="Thông tin phụ tùng">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Label>
+
+                <VBox spacing="5.0">
+                    <children>
+                        <Label text="Tên Phụ Tùng:" />
+                        <TextField fx:id="txtTenPhuTung" promptText="Ví dụ: Nhớt Castrol, Lốp xe..." />
+                    </children>
+                </VBox>
+
+                <VBox spacing="5.0">
+                    <children>
+                        <Label text="Số Lượng:" />
+                        <TextField fx:id="txtSoLuong" promptText="Nhập số nguyên (VD: 10)" />
+                    </children>
+                </VBox>
+
+                <VBox spacing="5.0">
+                    <children>
+                        <Label text="Giá Bán (VNĐ):" />
+                        <TextField fx:id="txtGiaBan" promptText="Nhập giá tiền" />
+                    </children>
+                </VBox>
+
+                <VBox spacing="10.0">
+                    <children>
+                        <Button fx:id="btnThem" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #27ae60;" text="THÊM MỚI" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Button>
+
+                        <HBox spacing="10.0">
+                            <children>
+                                <Button fx:id="btnSua" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #f39c12;" text="SỬA" textFill="WHITE" HBox.hgrow="ALWAYS" />
+                                <Button fx:id="btnXoa" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #c0392b;" text="XÓA" textFill="WHITE" HBox.hgrow="ALWAYS" />
+                            </children>
+                        </HBox>
+
+                        <Button fx:id="btnLamMoi" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Làm mới ô nhập" />
+                    </children>
+                    <VBox.margin>
+                        <Insets top="20.0" />
+                    </VBox.margin>
+                </VBox>
+            </children>
+        </VBox>
+
+        <TableView fx:id="tableKho" layoutX="380.0" layoutY="80.0" prefHeight="580.0" prefWidth="690.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="80.0">
+            <columns>
+                <TableColumn fx:id="colTen" prefWidth="300.0" text="Tên Phụ Tùng" />
+                <TableColumn fx:id="colSoLuong" prefWidth="100.0" text="Số Lượng" />
+                <TableColumn fx:id="colGia" prefWidth="150.0" text="Giá Bán (VNĐ)" />
+            </columns>
+        </TableView>
+    </children>
+</AnchorPane>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.doan123.Controller.LoginController">
+    <children>
+        <VBox alignment="TOP_CENTER" prefHeight="297.0" prefWidth="400.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2D3447" height="65.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="400.0" />
+
+                <VBox fx:id="formBox" alignment="CENTER" prefHeight="300.0" prefWidth="100.0" spacing="20.0">
+                    <padding>
+                        <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
+                    </padding>
+                    <children>
+                        <Label text="WELCOME!" textFill="#2d3447">
+                            <font>
+                                <Font name="System Bold" size="28.0" />
+                            </font>
+                        </Label>
+
+                        <TextField fx:id="txtUsername" maxWidth="280.0" prefHeight="45.0" promptText="Username" style="-fx-background-radius: 30; -fx-border-radius: 30; -fx-padding: 10;" VBox.vgrow="NEVER" />
+
+                        <PasswordField fx:id="txtPassword" maxWidth="280.0" prefHeight="45.0" promptText="Password" style="-fx-background-radius: 30; -fx-border-radius: 30; -fx-padding: 10;" VBox.vgrow="NEVER" />
+
+                        <Button fx:id="btnLogin" alignment="CENTER" mnemonicParsing="false" onAction="#handleLogin" prefHeight="45.0" prefWidth="280.0" style="" text="LOGIN">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+<!--                  <Button fx:id="btnThoat" mnemonicParsing="false" onAction="#handleThoat" text="Thoát" />-->
+                        <Button onAction="#handleChuyenFormDangKy" prefHeight="30.0" prefWidth="280.0" style="-fx-background-color: transparent; -fx-text-fill: #2c3e50; -fx-cursor: hand; -fx-underline: true;" text="Chưa có tài khoản? Đăng ký ngay" />
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

@@ -1,0 +1,94 @@
+/* 1. Cấu hình chung cho toàn bộ ứng dụng */
+.root {
+    -fx-font-family: 'Segoe UI', sans-serif;
+    -fx-font-smoothing-type: lcd; /* Làm mịn chữ, giúp chữ nét hơn */
+}
+
+/* 2. Header (Thanh trên cùng) */
+.header-section {
+    /* Đổi sang màu Xanh Than pha Xám (Sang hơn màu đen thuần) */
+    -fx-background-color: #1F2338;
+    -fx-padding: 10 20 10 20;
+    /* Đổ bóng nhẹ xuống dưới để tách biệt với phần còn lại */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.25), 10, 0, 0, 5);
+}
+
+/* 3. Sidebar (Menu bên trái) */
+.sidebar-section {
+    /* Màu nền tối hơn Header một chút để tạo chiều sâu */
+    -fx-background-color: #161926;
+    -fx-padding: 10 0 10 0;
+}
+
+/* 4. Logo Text */
+.logo-text {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: 700;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 2, 0, 0, 1); /* Bóng chữ nhẹ */
+}
+
+/*
+   BUTTON
+ */
+
+/* 5. Nút bấm Menu (Trạng thái bình thường) */
+.menu-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #a0aec0;      /* Màu chữ xám xanh nhạt (dễ đọc trên nền tối) */
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER-LEFT;  /* Canh lề trái */
+    -fx-padding: 14 20 14 20;    /* Tăng chiều cao nút cho thoáng */
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 0 4;   /* Chuẩn bị sẵn đường viền trái 4px */
+}
+
+/* 6. Khi di chuột vào (Hover) */
+.menu-button:hover {
+    -fx-background-color: #2D3748; /* Sáng hơn nền một chút */
+    -fx-text-fill: white;          /* Chữ sáng lên */
+    -fx-border-color: transparent transparent transparent #4FD1C5; /* Vạch màu xanh ngọc (Teal) */
+}
+
+/* 7. [MỚI] Trạng thái ĐANG CHỌN (Active)
+   Dùng class này khi nút đó đang được active */
+.menu-button-active {
+    -fx-background-color: #2D3748;
+    -fx-text-fill: #4FD1C5;        /* Chữ chuyển sang màu xanh ngọc */
+    -fx-border-color: transparent transparent transparent #4FD1C5; /* Giữ nguyên vạch xanh */
+    -fx-effect: dropshadow(three-pass-box, rgba(79, 209, 197, 0.2), 10, 0, 0, 0); /* Phát sáng nhẹ */
+}
+
+/* 8. Xóa cái viền xanh mặc định khó chịu khi bấm vào nút */
+.menu-button:focused {
+    -fx-background-insets: 0;
+}
+
+/*
+   CONTENT AREA
+*/
+
+/* 9. Khu vực làm việc chính (Center) */
+.main-content {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12;     /* Bo góc mềm mại hơn (12px) */
+    /* Đổ bóng nhẹ xung quanh bảng trắng để nó nổi lên khỏi nền xám */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 8, 0, 0, 0);
+}
+
+.button-do {
+    -fx-background-color: #b50d0d;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.btn-add:hover {
+    -fx-background-color: #8a0a0a; /* Đậm hơn khi di chuột vào */
+}
+
+
+
