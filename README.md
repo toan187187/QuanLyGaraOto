@@ -135,22 +135,66 @@ Hoặc chạy trực tiếp class `Launcher.java` trong IntelliJ IDEA.
 
 ```
 DOAN123/
-├── src/main/java/com/example/doan123/
-│   ├── Controller/         # Xử lý sự kiện giao diện
-│   │   ├── LoginController.java
-│   │   ├── MainController.java
-│   │   ├── TiepNhanController.java
-│   │   ├── SuaChuaController.java
-│   │   ├── ThanhToanController.java
-│   │   ├── KhoHangController.java
-│   │   └── BaoCaoController.java
-│   ├── Dao/                # Truy vấn cơ sở dữ liệu
-│   ├── Model/              # Các đối tượng dữ liệu
-│   ├── JDBC/               # Kết nối SQL Server
-│   └── Util/               # Tiện ích (PDF, hash mật khẩu)
-├── src/main/resources/     # Giao diện FXML + CSS
-├── ĐỒ ÁN CUỐI KỲ.sql      # Script tạo database
-└── pom.xml
+├── src/
+│   ├── main/
+│   │   ├── java/com/example/doan123/
+│   │   │   │
+│   │   │   ├── Controller/                     # Xử lý sự kiện giao diện
+│   │   │   │   ├── LoginController.java        # Đăng nhập & đăng ký tài khoản
+│   │   │   │   ├── MainController.java         # Màn hình chính, điều hướng menu, phân quyền
+│   │   │   │   ├── TiepNhanController.java     # Tiếp nhận xe, tra cứu lịch sử
+│   │   │   │   ├── SuaChuaController.java      # Thêm phụ tùng/dịch vụ vào phiếu sửa
+│   │   │   │   ├── ThanhToanController.java    # Thanh toán, xuất hóa đơn PDF
+│   │   │   │   ├── KhoHangController.java      # Quản lý kho phụ tùng, cảnh báo tồn kho
+│   │   │   │   └── BaoCaoController.java       # Biểu đồ doanh thu theo tháng/ngày
+│   │   │   │
+│   │   │   ├── Model/                          # Các đối tượng dữ liệu (POJO)
+│   │   │   │   ├── TaiKhoan.java               # Tài khoản người dùng
+│   │   │   │   ├── KhachHang.java              # Khách hàng
+│   │   │   │   ├── Xe.java                     # Xe (biển số, hãng, số VIN)
+│   │   │   │   ├── PhieuSuaChua.java           # Phiếu sửa chữa
+│   │   │   │   ├── ChiTietSuaChua.java         # Chi tiết từng hạng mục sửa chữa
+│   │   │   │   ├── PhuTung.java                # Phụ tùng trong kho
+│   │   │   │   ├── DichVu.java                 # Dịch vụ sửa chữa
+│   │   │   │   ├── PhieuNhap.java              # Phiếu nhập kho
+│   │   │   │   ├── ChiTietNhap.java            # Chi tiết phiếu nhập kho
+│   │   │   │   └── NhaCungCap.java             # Nhà cung cấp phụ tùng
+│   │   │   │
+│   │   │   ├── Dao/                            # Truy vấn SQL Server (CRUD)
+│   │   │   │   ├── TaiKhoanDAO.java            # Login, insert, update tài khoản
+│   │   │   │   ├── KhachHangDAO.java           # Tìm khách theo SĐT, thêm mới
+│   │   │   │   ├── XeDAO.java                  # Tìm xe theo biển số, thêm xe mới
+│   │   │   │   ├── PhieuSuaChuaDAO.java        # CRUD phiếu, lọc trạng thái, báo cáo doanh thu
+│   │   │   │   ├── ChiTietSuaChuaDAO.java      # Thêm/lấy chi tiết phụ tùng & dịch vụ
+│   │   │   │   ├── PhuTungDAO.java             # CRUD phụ tùng, cập nhật tồn kho
+│   │   │   │   ├── DichVuDAO.java              # CRUD dịch vụ
+│   │   │   │   ├── PhieuNhapDAO.java           # CRUD phiếu nhập kho
+│   │   │   │   ├── ChiTietNhapDAO.java         # CRUD chi tiết nhập kho
+│   │   │   │   └── NhaCungCapDAO.java          # CRUD nhà cung cấp
+│   │   │   │
+│   │   │   ├── JDBC/
+│   │   │   │   └── KetNoi.java                 # Kết nối SQL Server (URL, username, password)
+│   │   │   │
+│   │   │   ├── Util/
+│   │   │   │   ├── PdfUtil.java                # Xuất hóa đơn PDF bằng iTextPDF
+│   │   │   │   └── MatKhauUtil.java            # Hash mật khẩu SHA-256
+│   │   │   │
+│   │   │   ├── HelloApplication.java           # Entry point khởi động JavaFX
+│   │   │   └── Launcher.java                   # Class chạy chính
+│   │   │
+│   │   └── resources/com/example/doan123/      # Giao diện FXML + CSS
+│   │       ├── Login-View.fxml                 # Màn hình đăng nhập
+│   │       ├── Dang-Ky.fxml                    # Màn hình đăng ký
+│   │       ├── Main.fxml                       # Khung chính (menu điều hướng)
+│   │       ├── Tiep-Nhan-View.fxml             # Giao diện tiếp nhận xe
+│   │       ├── Sua-Chua-View.fxml              # Giao diện sửa chữa
+│   │       ├── Thanh-Toan.fxml                 # Giao diện thanh toán
+│   │       ├── Kho-Hang-View.fxml              # Giao diện kho hàng
+│   │       ├── Bao-Cao-View.fxml               # Giao diện báo cáo
+│   │       └── style.css                       # CSS toàn ứng dụng
+│
+├── ĐỒ ÁN CUỐI KỲ.sql                          # Script tạo database & dữ liệu mẫu
+└── pom.xml                                     # Cấu hình Maven & dependencies
 ```
 
 ---
@@ -173,4 +217,4 @@ NHA_CUNG_CAP ─── PHIEU_NHAP ─── CHI_TIET_NHAP ──┘
 
 ## 👨‍💻 Tác giả
 
-Dự án đồ án cuối kỳ — **Gara Toàn Trương (VKU)**
+Dự án đồ án cuối kỳ — **Gara Toàn Trương Trí (VKU)**
