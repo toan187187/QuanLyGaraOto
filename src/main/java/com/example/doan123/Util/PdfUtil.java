@@ -3,11 +3,13 @@ package com.example.doan123.Util;
 import com.example.doan123.Model.ChiTietSuaChua;
 import com.example.doan123.Model.PhieuSuaChua;
 import com.itextpdf.text.*;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.time.format.DateTimeFormatter;
@@ -97,6 +99,19 @@ public class PdfUtil {
             // 3. BƯỚC QUAN TRỌNG NHẤT: Bắt buộc phải đóng file dù code chạy mượt hay bị lỗi
             if (document != null && document.isOpen()) {
                 document.close();
+            }
+
+            try {
+                String fileName = "HoaDon_" + phieu.getBienSo().replace("-", "") + "_" + phieu.getId() + ".pdf";
+                File pdfFile = new File(fileName);
+
+                // Kiểm tra xem máy tính có hỗ trợ mở file không và file có tồn tại không
+                if (pdfFile.exists() && Desktop.isDesktopSupported()) {
+                    Desktop.getDesktop().open(pdfFile);
+                }
+            } catch (Exception ex) {
+                System.out.println("❌ Không thể tự động mở file PDF!");
+                ex.printStackTrace();
             }
         }
     }

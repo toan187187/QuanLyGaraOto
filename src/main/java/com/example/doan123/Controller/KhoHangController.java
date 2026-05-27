@@ -12,8 +12,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.DoubleUnaryOperator;
 
 public class KhoHangController implements Initializable {
     @FXML private TextField txtTenPhuTung;
@@ -81,23 +83,49 @@ public class KhoHangController implements Initializable {
     }
 
     private void xulyThem(){
-        if(txtTenPhuTung.getText().isEmpty()){
+        String tenNhap = txtTenPhuTung.getText().trim();
+        if(tenNhap.isEmpty()){
             showAlert("Thiếu thông tin", "Vui lòng nhập tên phụ tùng");
             return;
         }
         try{
-            PhuTung p = new PhuTung();
-            p.setTenPhuTung(txtTenPhuTung.getText());
-            p.setSoLuongTon(Integer.parseInt(txtSoLuong.getText().trim()));
-            p.setGiaBan(Double.parseDouble(txtGiaBan.getText().trim()));
+            int soLuongNhap = Integer.parseInt(txtSoLuong.getText().trim());
+            double giaNhap = Double.parseDouble((txtGiaBan.getText().trim()));
 
-            phuTungDAO.insert(p);
+            List<PhuTung> listKho = phuTungDAO.selectAll();
+            PhuTung phuTungTon = null;
 
-            showAlert("Thành công", "Đã thêm món hàng mới");
+            for(PhuTung pt: listKho){
+                // so sánh tên không phân biệt hoa thường
+                if(pt.getTenPhuTung().equalsIgnoreCase(txtSoLuong.getText().trim())){
+                    phuTungTon = pt;
+                    break;
+                }
+            }
+            if(phuTungTon != null){
+                int soLuongMoi = phuTungTon.getSoLuongTon()  + soLuongNhap;
+                phuTungTon.setSoLuongTon(soLuongMoi);
+                phuTungTon.setGiaBan(giaNhap);
+
+                phuTungDAO.update(phuTungTon);
+                showAlert("Cộng dồn thành công", "Món ["+tenNhap+"] đã có trong kho. \nĐã cộng dồn thêm " +soLuongNhap+" cái.\nTổng số lượng hiện tại: "+soLuongMoi);
+            } else{
+                PhuTung p = new PhuTung();
+                p.setTenPhuTung(tenNhap);
+                p.setSoLuongTon(soLuongNhap);
+                p.setGiaBan(giaNhap);
+
+                phuTungDAO.insert(p);
+                showAlert("Thành công", "Đã thêm món hàng mới [" + tenNhap + "] vào kho.");
+            }
+
             loadDuLieuLenBang();
             xulyLamMoi();
+        } catch (NumberFormatException ex) {
+            showAlert("Lỗi nhập liệu", "Số lượng và Giá bán bắt buộc phải là số (Không được ghi chữ)!");
         } catch (Exception e){
             e.printStackTrace();
+            showAlert("Lỗi", "Đã xảy ra lỗi hệ thống: " + e.getMessage());
         }
     }
 
@@ -165,7 +193,7 @@ public class KhoHangController implements Initializable {
     }
 
     private void kiemtraTonKho(){
-        java.util.List<PhuTung> list = phuTungDAO.selectAll();
+        List<PhuTung> list = phuTungDAO.selectAll();
         StringBuilder canhBao = new StringBuilder();
         for(PhuTung pt: list){
             if(pt.getSoLuongTon() < 5){
