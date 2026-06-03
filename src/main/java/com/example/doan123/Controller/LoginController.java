@@ -2,7 +2,10 @@ package com.example.doan123.Controller;
 
 import com.example.doan123.Dao.TaiKhoanDAO;
 import com.example.doan123.Controller.MainController;
+
 import com.example.doan123.Model.TaiKhoan;
+import javafx.animation.PauseTransition;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,9 +14,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class   LoginController {
     @FXML
@@ -29,7 +35,10 @@ public class   LoginController {
     @FXML private TextField txtHoTenDK;
     @FXML private ComboBox<String> cbVaiTroDK;
 
+
     private TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
+    private int solansai =0;
+
 
     public void handleLogin(ActionEvent e){
         String username = txtUsername.getText();
@@ -40,15 +49,58 @@ public class   LoginController {
             return;
         }
 
-        TaiKhoan tk = taiKhoanDAO.login(username,password);
+        // Gói dữ liệu
+        Map<String, String> loginData = new HashMap<>();
+        loginData.put("username", username);
+        loginData.put("password", password);
+        com.example.doan123.Network.Request request= new com.example.doan123.Network.Request("LOGIN", loginData);
 
-        if(tk != null){
-//            showAlert("Đăng Nhập Thành Công");
-            openMainWindow(tk);
-            closeLoginWindow();
-        } else{
-            showAlert("Thông Báo","Vui lòng nhập lại tên đăng nhập và mật khẩu");
-        }
+        btnLogin.setDisable(true);
+        btnLogin.setText("Đang kết nối...");
+
+        // Tạo luồng ngầm
+        Task<com.example.doan123.Network.Response> loginTask = new Task<>(){
+            @Override
+            protected com.example.doan123.Network.Response call() throws Exception{
+                return com.example.doan123.Client.ClientSocketManager.sendRequest(request);
+            }
+        };
+        loginTask.setOnSucceeded(event ->{
+            com.example.doan123.Network.Response response = com.example.doan123.Client.ClientSocketManager.sendRequest(request);
+            btnLogin.setDisable(false);
+            btnLogin.setText("ĐĂNG NHẬP");
+            if(response.isSuccess()){
+                solansai =0;
+                TaiKhoan tkDangNhap = (TaiKhoan) response.getData();
+                openMainWindow(tkDangNhap);
+
+                ((Node) (e.getSource())).getScene().getWindow().hide();
+            } else {
+                solansai++;
+                if (solansai >= 3) {
+                    showAlert("Khóa bảo mật", "Bạn đã nhập sai 3 lần liên tiếp!\nHệ thống sẽ khóa đăng nhập trong 30 giây");
+                    btnLogin.setDisable(true); // khóa nút
+
+                    PauseTransition pauseTransition = new PauseTransition(Duration.seconds(30));    // tự động mở khóa
+                    pauseTransition.setOnFinished(ev -> {
+                        btnLogin.setDisable(false);  // cho mở lại
+                        solansai = 0;
+                    });
+                    pauseTransition.play();
+                } else {
+                    showAlert("Thông Báo", response.getMessage() + "\n(Bạn còn " + (3 - solansai) + " lần thử)");
+                }
+            }
+        });
+
+        // xử lý lỗi (rớt mạng, server)
+        loginTask.setOnFailed(event ->{
+            btnLogin.setDisable(false);
+            btnLogin.setText("ĐĂNG NHẬP");
+            showAlert("Lỗi", "Kết nối đến Server thất bại");
+        });
+
+        new Thread(loginTask).start();
     }
 
     private void chuyencanh(ActionEvent e, String fxmlfile, String title){

@@ -1,6 +1,9 @@
 package com.example.doan123.Model;
 
-public class TaiKhoan {
+import java.io.Serializable;
+
+public class TaiKhoan implements Serializable  {
+    private static final long serialVersionUID = 1L;
     private int id;
     private String tenDangNhap;
     private String matKhau;

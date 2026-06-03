@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javafx.event.ActionEvent;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -202,6 +203,58 @@ public class KhoHangController implements Initializable {
         }
         if(canhBao.length() > 0){
             showAlert("⚠ CẢNH BÁO TỒN KHO THẤP", "Các phụ tùng sau sắp hết, cần nhập thêm gấp:\n\n" + canhBao.toString());
+        }
+    }
+
+    @FXML
+    public void xuatFileXML(ActionEvent event) {
+        // 1. Mở cửa sổ cho người dùng chọn nơi lưu file
+        javafx.stage.FileChooser fileChooser = new javafx.stage.FileChooser();
+        fileChooser.setTitle("Lưu danh sách phụ tùng (XML)");
+        fileChooser.getExtensionFilters().add(new javafx.stage.FileChooser.ExtensionFilter("XML Files", "*.xml"));
+        fileChooser.setInitialFileName("DanhSachPhuTung.xml");
+
+        // Lấy cửa sổ hiện tại
+        javafx.stage.Window stage = ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        java.io.File file = fileChooser.showSaveDialog(stage);
+
+        if (file != null) {
+            // Lấy danh sách đang hiển thị trên bảng
+            java.util.List<com.example.doan123.Model.PhuTung> listHienTai = new java.util.ArrayList<>(tableKho.getItems());
+
+            // Gọi hàm XMLUtil
+            boolean thanhCong = com.example.doan123.Util.XMLUtil.xuatXML(listHienTai, file);
+
+            if (thanhCong) {
+                showAlert("Thành công", "Đã xuất file XML thành công!");
+            } else {
+                showAlert("Lỗi", "Quá trình xuất file thất bại!");
+            }
+        }
+    }
+
+    @FXML
+    public void nhapFileXML(ActionEvent event) {
+        javafx.stage.FileChooser fileChooser = new javafx.stage.FileChooser();
+        fileChooser.setTitle("Mở file danh sách phụ tùng (XML)");
+        fileChooser.getExtensionFilters().add(new javafx.stage.FileChooser.ExtensionFilter("XML Files", "*.xml"));
+
+        javafx.stage.Window stage = ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        java.io.File file = fileChooser.showOpenDialog(stage);
+
+        if (file != null) {
+            // Gọi hàm đọc từ XMLUtil
+            java.util.List<com.example.doan123.Model.PhuTung> listMoi = com.example.doan123.Util.XMLUtil.nhapXML(file);
+
+            if (!listMoi.isEmpty()) {
+                // (Tùy chọn): Ở đây bạn có thể dùng vòng lặp để Insert danh sách này vào Database
+                // Hiện tại, ta sẽ hiển thị nó lên bảng trước để kiểm tra
+                tableKho.getItems().clear();
+                tableKho.getItems().addAll(listMoi);
+                showAlert("Thành công", "Đã nhập " + listMoi.size() + " phụ tùng từ file XML vào bảng!");
+            } else {
+                showAlert("Lỗi", "File XML trống hoặc không đúng định dạng!");
+            }
         }
     }
 }

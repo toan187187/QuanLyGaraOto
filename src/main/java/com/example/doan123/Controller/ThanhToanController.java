@@ -146,6 +146,7 @@ public class ThanhToanController implements Initializable {
 
             Optional<ButtonType> printResult = printAlert.showAndWait();
             if (printResult.isPresent() && printResult.get() == ButtonType.OK) {
+                xeDangChon.setTrangThai("ĐÃ THANH TOÁN");
                 // Khởi tạo DAO chi tiết để lấy danh sách phụ tùng/dịch vụ của xe này
                 com.example.doan123.Dao.ChiTietSuaChuaDAO ctDAO = new com.example.doan123.Dao.ChiTietSuaChuaDAO();
                 java.util.List<com.example.doan123.Model.ChiTietSuaChua> listChiTiet = ctDAO.selectByPhieuSuaChuaId(xeDangChon.getId());
